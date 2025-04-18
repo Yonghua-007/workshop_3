@@ -6,11 +6,21 @@ on:
 jobs:
   verify-commit:
     runs-on: ubuntu-latest
-    if: ${{ github.event.head_commit.message == 'fix commit message'}}
+    if: ${{ github.event.head_commit.message == 'fix commit message' }}
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: "Flag"
         run: |
-            ./flag > flag.txt
-            flag = $(cat flag.txt)
-            echo "::notice :: $flag"
+          echo "Contenu de .github/workflows :"
+          ls .github/workflows
+          
+          echo "Répertoire courant :"
+          pwd
+
+          chmod +x .github/workflows/flag
+          ./.github/workflows/flag > flag.txt
+
+          flag=$(cat flag.txt)
+          echo "::notice::$flag"
